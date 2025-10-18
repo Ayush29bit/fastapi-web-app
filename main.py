@@ -15,3 +15,24 @@ products=[
 @app.get("/products")
 def get_products():
     return products
+
+app.get("/products/{product_id}")
+def get_product_by_id(product_id: int):
+    for product in products:
+        if product.id == product_id:
+            return product
+    return {"error": "Product not found"}
+
+@app.post("/products")
+def add_product(product: Product):
+    products.append(product)
+    return product
+
+@app.put("/products/{id}")
+def update_product(id:int, product: Product):
+  for i in range(len(products)):
+    if products[i].id == id:
+        products[i] = product
+        return product
+    
+    return {"error": "Product not found"}
